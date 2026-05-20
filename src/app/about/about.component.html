@@ -1,0 +1,55 @@
+<div class="about-container">
+  <div class="content-wrapper">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">👨‍💻</div>
+        <h1>{{ profile.name }}</h1>
+        <p class="title">{{ profile.title }}</p>
+      </div>
+
+      <div class="profile-bio">
+        <p>{{ profile.bio }}</p>
+      </div>
+
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="icon">📧</span>
+          <div>
+            <p class="label">Email</p>
+            <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="icon">📱</span>
+          <div>
+            <p class="label">Teléfono</p>
+            <a [href]="'tel:' + profile.phone">{{ profile.phone }}</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="icon">📍</span>
+          <div>
+            <p class="label">Ubicación</p>
+            <p>{{ profile.location }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-social">
+        <h3>Sígueme</h3>
+        <div class="social-links">
+          <a *ngFor="let social of profile.social" [href]="social.url" class="social-link">
+            <span>{{ social.icon }}</span>
+            <span>{{ social.name }}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="profile-footer">
+        <p>© 2024 LifeGoals. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </div>
+</div>

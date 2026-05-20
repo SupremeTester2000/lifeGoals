@@ -1,0 +1,61 @@
+<div class="home-container">
+  <div class="content-wrapper">
+    <h1>Mis Metas en la Vida</h1>
+    <p class="subtitle">Organiza, planifica y alcanza tus objetivos</p>
+
+    <div class="input-section">
+      <form (ngSubmit)="addMeta()" class="form-group">
+        <div class="input-wrapper">
+          <input
+            type="text"
+            [(ngModel)]="newMeta"
+            name="meta"
+            placeholder="Ingresa una nueva meta..."
+            class="meta-input"
+            (keyup.enter)="addMeta()"
+          />
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            <span *ngIf="!loading">+ Agregar Meta</span>
+            <span *ngIf="loading">Agregando...</span>
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="errorMessage" class="alert alert-error">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="metas-section">
+      <div *ngIf="loading && metas.length === 0" class="loading">
+        Cargando metas...
+      </div>
+
+      <div *ngIf="!loading && metas.length === 0" class="empty-state">
+        <p>No tienes metas aún. ¡Comienza a crear una!</p>
+      </div>
+
+      <div *ngIf="metas.length > 0" class="metas-list">
+        <h2>Tus Metas ({{ metas.length }})</h2>
+        <div class="cards-container">
+          <div *ngFor="let meta of metas; let i = index" class="meta-card">
+            <div class="card-number">{{ i + 1 }}</div>
+            <div class="card-content">
+              <p class="meta-text">{{ meta.meta }}</p>
+              <p class="meta-date" *ngIf="meta.createdAt">
+                {{ meta.createdAt | date: 'short' }}
+              </p>
+            </div>
+            <button
+              (click)="deleteMeta(meta.id)"
+              class="btn btn-delete"
+              [disabled]="loading"
+            >
+              🗑️
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
