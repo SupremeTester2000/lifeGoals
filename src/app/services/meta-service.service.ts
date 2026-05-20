@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, DocumentData, QueryConstraint } from '@angular/fire/firestore';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Meta } from '../models/meta.model';
 
@@ -8,46 +8,32 @@ import { Meta } from '../models/meta.model';
   providedIn: 'root'
 })
 export class MetaServiceService {
+  private metasCollection = collection(this.firestore, 'metas');
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: Firestore) { }
 
   getMetas(): Observable<Meta[]> {
-    return this.firestore.collection<Meta>('metas', ref => ref.orderBy('createdAt', 'desc'))
-      .snapshotChanges()
-      .pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data() as Meta;
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
+    return from(
+      getDocs(this.metasCollection).then(snapshot => {
+        return snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as Meta));
+      })
+    );
   }
 
-  addMeta(meta: string): Observable<any> {
-    const metaObj = {
-      meta: meta,
-      createdAt: new Date()
-    };
-    return new Observable(subscriber => {
-      this.firestore.collection('metas').add(metaObj)
-        .then(docRef => {
-          subscriber.next(docRef.id);
-          subscriber.complete();
-        })
-        .catch(err => subscriber.error(err));
-    });
+  addMeta(meta: string): Observable<string> {
+    return from(
+      addDoc(this.metasCollection, {
+        meta: meta,
+        createdAt: new Date()
+      }).then(docRef => docRef.id)
+    );
   }
 
   deleteMeta(id: string): Observable<void> {
-    return new Observable(subscriber => {
-      this.firestore.collection('metas').doc(id).delete()
-        .then(() => {
-          subscriber.next();
-          subscriber.complete();
-        })
-        .catch(err => subscriber.error(err));
-    });
+    const metaDoc = doc(this.firestore, 'metas', id);
+    return from(deleteDoc(metaDoc));
   }
 }
