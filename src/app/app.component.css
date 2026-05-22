@@ -1,7 +1,7 @@
 .navbar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #3498db;
   padding: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 60px;
 }
 
 .navbar-brand {
@@ -27,17 +27,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  transition: transform 0.3s ease;
-}
-
-.brand-link:hover {
-  transform: scale(1.05);
 }
 
 .brand-icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .nav-menu {
@@ -55,22 +50,17 @@
 .nav-menu a {
   color: white;
   text-decoration: none;
-  padding: 20px 20px;
+  padding: 15px 15px;
   display: block;
-  transition: all 0.3s ease;
-  font-weight: 500;
   font-size: 1rem;
-  border-bottom: 3px solid transparent;
 }
 
 .nav-menu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-bottom-color: white;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .nav-menu a.active {
-  border-bottom-color: white;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .menu-toggle {
@@ -88,7 +78,6 @@
   background: white;
   margin: 5px 0;
   border-radius: 3px;
-  transition: all 0.3s ease;
 }
 
 .menu-toggle.active span:nth-child(1) {
@@ -118,7 +107,7 @@
     top: 60px;
     width: 100%;
     flex-direction: column;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3498db;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
@@ -129,12 +118,12 @@
   }
 
   .nav-menu a {
-    padding: 15px 20px;
+    padding: 12px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .brand-link {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .brand-icon {

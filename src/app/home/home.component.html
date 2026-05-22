@@ -46,15 +46,60 @@
                 {{ meta.createdAt | date: 'short' }}
               </p>
             </div>
-            <button
-              (click)="deleteMeta(meta.id)"
-              class="btn btn-delete"
-              [disabled]="loading"
-            >
-              🗑️
-            </button>
+            <div class="card-actions">
+              <button
+                (click)="startEdit(meta)"
+                class="btn btn-edit"
+                [disabled]="loading"
+                title="Editar"
+              >
+                Editar
+              </button>
+              <button
+                (click)="deleteMeta(meta.id)"
+                class="btn btn-delete"
+                [disabled]="loading"
+                title="Eliminar"
+              >
+                Eliminar
+              </button>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edición -->
+  <div *ngIf="editingId" class="modal-overlay" (click)="cancelEdit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Editar Meta</h2>
+        <button class="modal-close" (click)="cancelEdit()" title="Cerrar">X</button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          [(ngModel)]="editText"
+          name="editMeta"
+          placeholder="Edita tu meta..."
+          class="edit-input"
+          (keyup.enter)="saveEdit()"
+          (keyup.escape)="cancelEdit()"
+        />
+      </div>
+      <div class="modal-footer">
+        <button (click)="cancelEdit()" class="btn btn-secondary">
+          Cancelar
+        </button>
+        <button
+          (click)="saveEdit()"
+          class="btn btn-primary"
+          [disabled]="loading || !editText.trim()"
+        >
+          <span *ngIf="!loading">Guardar Cambios</span>
+          <span *ngIf="loading">Guardando...</span>
+        </button>
       </div>
     </div>
   </div>

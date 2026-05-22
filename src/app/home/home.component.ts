@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
   newMeta: string = '';
   loading: boolean = false;
   errorMessage: string = '';
+  editingId: string | null = null;
+  editText: string = '';
 
   constructor(private metaService: MetaServiceService) { }
 
@@ -70,5 +72,36 @@ export class HomeComponent implements OnInit {
         }
       });
     }
+  }
+
+  startEdit(meta: Meta): void {
+    this.editingId = meta.id || null;
+    this.editText = meta.meta;
+  }
+
+  saveEdit(): void {
+    if (!this.editingId || !this.editText.trim()) {
+      this.errorMessage = 'Por favor ingresa un texto válido';
+      return;
+    }
+
+    this.loading = true;
+    this.metaService.updateMeta(this.editingId, this.editText).subscribe({
+      next: () => {
+        this.loadMetas();
+        this.cancelEdit();
+      },
+      error: (err) => {
+        console.error('Error updating meta:', err);
+        this.errorMessage = 'Error al actualizar la meta';
+        this.loading = false;
+      }
+    });
+  }
+
+  cancelEdit(): void {
+    this.editingId = null;
+    this.editText = '';
+    this.errorMessage = '';
   }
 }

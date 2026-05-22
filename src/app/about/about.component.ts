@@ -7,17 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AboutComponent {
   profile = {
-    name: 'Tu Nombre',
+    name: 'Luis Neftali Vargas Vargas',
     title: 'Ingeniero de Software',
-    email: 'tu.email@example.com',
-    phone: '+1 (555) 123-4567',
-    location: 'Tu Ciudad, País',
+    email: 'luis-neftali@hotmail.com',
+    phone: '+52 272 162 9578',
+    location: 'Orizaba, México',
     bio: 'Desarrollador apasionado por las nuevas tecnologías, especializado en Angular y desarrollo web moderno. Comprometido con crear soluciones innovadoras y escalables.',
-    social: [
-      { name: 'LinkedIn', url: '#', icon: '💼' },
-      { name: 'GitHub', url: '#', icon: '🐙' },
-      { name: 'Twitter', url: '#', icon: '🐦' },
-      { name: 'Instagram', url: '#', icon: '📸' }
-    ]
+    social: []
   };
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, DocumentData, QueryConstraint } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc, DocumentData, QueryConstraint } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Meta } from '../models/meta.model';
@@ -35,5 +35,10 @@ export class MetaServiceService {
   deleteMeta(id: string): Observable<void> {
     const metaDoc = doc(this.firestore, 'metas', id);
     return from(deleteDoc(metaDoc));
+  }
+
+  updateMeta(id: string, metaText: string): Observable<void> {
+    const metaDoc = doc(this.firestore, 'metas', id);
+    return from(updateDoc(metaDoc, { meta: metaText }));
   }
 }
