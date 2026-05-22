@@ -1,0 +1,44 @@
+name: Angular_DockerImage
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  angular_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular
+        run: npm run build
+
+      - name: Verify dist
+        run: ls -la dist/lifegoals
+
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKER_USER }}/lifegoals:${{ github.sha }} \
+            -t ${{ secrets.DOCKER_USER }}/lifegoals:latest \
+            .
+
+      - name: Push Docker images
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/lifegoals:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/lifegoals:latest
+
+      - name: Trigger Render Deploy
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
