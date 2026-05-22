@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AboutComponent {
   profile = {
-    name: 'Luis Neftali Vargas Vargas',
+    name: 'SupremeTester2000',
     title: 'Ingeniero de Software',
     email: 'luis-neftali@hotmail.com',
     phone: '+52 272 162 9578',
